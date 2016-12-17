@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Documents;
+using Xceed.Wpf.Toolkit;
 
 namespace Buying_Guide.Models
 {
@@ -19,6 +21,7 @@ namespace Buying_Guide.Models
         private readonly ORM _orm = new ORM();
         private readonly List<int> _ownFormsId = new List<int>();
         private readonly List<string> _daysOfWeek = new List<string>();
+        private readonly List<int> _daysOfWeekId = new List<int>();
 
         public ShopModel()
         {
@@ -52,9 +55,12 @@ namespace Buying_Guide.Models
             }
 
             var dow = from d in _orm.WEEK_DAYS
-                select new {d.DAY_OF_WEEK};
+                select new {d.DAY_OF_WEEK, d.ID};
             foreach (var day in dow)
+            {
                 _daysOfWeek.Add(day.DAY_OF_WEEK);
+                _daysOfWeekId.Add(day.ID);
+            }
         }
 
         public List<string> GetWeekDays()
@@ -113,7 +119,7 @@ namespace Buying_Guide.Models
             }
         }
 
-        public void AddShop(string name, string address, string phone, int ownForm, string image, List<string> specializationsList) 
+        public void AddShop(string name, string address, string phone, int ownForm, string image, List<string> specializationsList, List<List<TimePicker>> list) 
         {
             SHOP shop = new SHOP
             {
@@ -126,12 +132,22 @@ namespace Buying_Guide.Models
 
             if (File.Exists(image))
                 shop.IMAGE = image;
-
+            
             _orm.SHOP.Add(shop);
            
             List<int> specList = GetSpecializationId(specializationsList);
             foreach (int i in specList)
                 _orm.SHOP_SPECIALIZATION.Add(new SHOP_SPECIALIZATION() {SHOP_ID = shop.ID, SPECIALIZATION_ID = i});
+            for (int i = 0; i < list.Count; i++)
+            {
+                shop.WORKING_HOURS.Add(new WORKING_HOURS()
+                {
+                    OPEN_TIME = list[0][i].Text,
+                    CLOSE_TIME = list[1][i].Text,
+                    DAY_OF_WEEK_ID = _daysOfWeekId[i],
+                    SHOP_ID = shop.ID
+                });
+            }
             _orm.SaveChanges();
         }
 

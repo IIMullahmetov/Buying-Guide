@@ -18,8 +18,8 @@ namespace Buying_Guide.Models
         public SHOP()
         {
             this.PRODUCTS = new HashSet<PRODUCTS>();
-            this.SHOP_SPECIALIZATION = new HashSet<SHOP_SPECIALIZATION>();
             this.WORKING_HOURS = new HashSet<WORKING_HOURS>();
+            this.SHOP_SPECIALIZATION = new HashSet<SHOP_SPECIALIZATION>();
         }
     
         public int ID { get; set; }
@@ -33,8 +33,8 @@ namespace Buying_Guide.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PRODUCTS> PRODUCTS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SHOP_SPECIALIZATION> SHOP_SPECIALIZATION { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WORKING_HOURS> WORKING_HOURS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SHOP_SPECIALIZATION> SHOP_SPECIALIZATION { get; set; }
     }
 }

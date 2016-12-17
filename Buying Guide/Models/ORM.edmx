@@ -64,14 +64,14 @@
         <EntityType Name="WORKING_HOURS">
           <Key>
             <PropertyRef Name="SHOP_ID" />
-            <PropertyRef Name="DAY_OF_WEK_ID" />
+            <PropertyRef Name="DAY_OF_WEEK_ID" />
             <PropertyRef Name="OPEN_TIME" />
             <PropertyRef Name="CLOSE_TIME" />
           </Key>
           <Property Name="SHOP_ID" Type="int" Nullable="false" />
-          <Property Name="DAY_OF_WEK_ID" Type="int" Nullable="false" />
-          <Property Name="OPEN_TIME" Type="time" Precision="7" Nullable="false" />
-          <Property Name="CLOSE_TIME" Type="time" Precision="7" Nullable="false" />
+          <Property Name="DAY_OF_WEEK_ID" Type="int" Nullable="false" />
+          <Property Name="OPEN_TIME" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="CLOSE_TIME" Type="nvarchar" MaxLength="5" Nullable="false" />
         </EntityType>
         <Association Name="FK_OF_ID">
           <End Role="OWN_FORMS" Type="Self.OWN_FORMS" Multiplicity="1" />
@@ -109,6 +109,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_S_ID">
+          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
+          <End Role="WORKING_HOURS" Type="Self.WORKING_HOURS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHOP">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WORKING_HOURS">
+              <PropertyRef Name="SHOP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SH_ID">
           <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
           <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
@@ -133,18 +145,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SHOP_ID">
-          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
-          <End Role="WORKING_HOURS" Type="Self.WORKING_HOURS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SHOP">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="WORKING_HOURS">
-              <PropertyRef Name="SHOP_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_WD_ID">
           <End Role="WEEK_DAYS" Type="Self.WEEK_DAYS" Multiplicity="1" />
           <End Role="WORKING_HOURS" Type="Self.WORKING_HOURS" Multiplicity="*" />
@@ -153,7 +153,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="WORKING_HOURS">
-              <PropertyRef Name="DAY_OF_WEK_ID" />
+              <PropertyRef Name="DAY_OF_WEEK_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -167,7 +167,7 @@
           <EntitySet Name="WORKING_HOURS" EntityType="Self.WORKING_HOURS" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [WORKING_HOURS].[SHOP_ID] AS [SHOP_ID], 
-    [WORKING_HOURS].[DAY_OF_WEK_ID] AS [DAY_OF_WEK_ID], 
+    [WORKING_HOURS].[DAY_OF_WEEK_ID] AS [DAY_OF_WEEK_ID], 
     [WORKING_HOURS].[OPEN_TIME] AS [OPEN_TIME], 
     [WORKING_HOURS].[CLOSE_TIME] AS [CLOSE_TIME]
     FROM [dbo].[WORKING_HOURS] AS [WORKING_HOURS]</DefiningQuery>
@@ -184,6 +184,10 @@
             <End Role="SPECIALIZATION" EntitySet="SPECIALIZATION" />
             <End Role="SHOP_SPECIALIZATION" EntitySet="SHOP_SPECIALIZATION" />
           </AssociationSet>
+          <AssociationSet Name="FK_S_ID" Association="Self.FK_S_ID">
+            <End Role="SHOP" EntitySet="SHOP" />
+            <End Role="WORKING_HOURS" EntitySet="WORKING_HOURS" />
+          </AssociationSet>
           <AssociationSet Name="FK_SH_ID" Association="Self.FK_SH_ID">
             <End Role="SHOP" EntitySet="SHOP" />
             <End Role="PRODUCTS" EntitySet="PRODUCTS" />
@@ -191,10 +195,6 @@
           <AssociationSet Name="FK_SHOP" Association="Self.FK_SHOP">
             <End Role="SHOP" EntitySet="SHOP" />
             <End Role="SHOP_SPECIALIZATION" EntitySet="SHOP_SPECIALIZATION" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SHOP_ID" Association="Self.FK_SHOP_ID">
-            <End Role="SHOP" EntitySet="SHOP" />
-            <End Role="WORKING_HOURS" EntitySet="WORKING_HOURS" />
           </AssociationSet>
           <AssociationSet Name="FK_WD_ID" Association="Self.FK_WD_ID">
             <End Role="WEEK_DAYS" EntitySet="WEEK_DAYS" />
@@ -242,8 +242,8 @@
           <Property Name="IMAGE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="OWN_FORMS" Relationship="Self.FK_OF_ID" FromRole="SHOP" ToRole="OWN_FORMS" />
           <NavigationProperty Name="PRODUCTS" Relationship="Self.FK_SH_ID" FromRole="SHOP" ToRole="PRODUCTS" />
+          <NavigationProperty Name="WORKING_HOURS" Relationship="Self.FK_S_ID" FromRole="SHOP" ToRole="WORKING_HOURS" />
           <NavigationProperty Name="SHOP_SPECIALIZATION" Relationship="Self.FK_SHOP" FromRole="SHOP" ToRole="SHOP_SPECIALIZATION" />
-          <NavigationProperty Name="WORKING_HOURS" Relationship="Self.FK_SHOP_ID" FromRole="SHOP" ToRole="WORKING_HOURS" />
         </EntityType>
         <EntityType Name="SHOP_SPECIALIZATION">
           <Key>
@@ -275,15 +275,15 @@
         <EntityType Name="WORKING_HOURS">
           <Key>
             <PropertyRef Name="SHOP_ID" />
-            <PropertyRef Name="DAY_OF_WEK_ID" />
+            <PropertyRef Name="DAY_OF_WEEK_ID" />
             <PropertyRef Name="OPEN_TIME" />
             <PropertyRef Name="CLOSE_TIME" />
           </Key>
           <Property Name="SHOP_ID" Type="Int32" Nullable="false" />
-          <Property Name="DAY_OF_WEK_ID" Type="Int32" Nullable="false" />
-          <Property Name="OPEN_TIME" Type="Time" Nullable="false" Precision="7" />
-          <Property Name="CLOSE_TIME" Type="Time" Nullable="false" Precision="7" />
-          <NavigationProperty Name="SHOP" Relationship="Self.FK_SHOP_ID" FromRole="WORKING_HOURS" ToRole="SHOP" />
+          <Property Name="DAY_OF_WEEK_ID" Type="Int32" Nullable="false" />
+          <Property Name="OPEN_TIME" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CLOSE_TIME" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SHOP" Relationship="Self.FK_S_ID" FromRole="WORKING_HOURS" ToRole="SHOP" />
           <NavigationProperty Name="WEEK_DAYS" Relationship="Self.FK_WD_ID" FromRole="WORKING_HOURS" ToRole="WEEK_DAYS" />
         </EntityType>
         <Association Name="FK_OF_ID">
@@ -322,6 +322,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_S_ID">
+          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
+          <End Role="WORKING_HOURS" Type="Self.WORKING_HOURS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHOP">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WORKING_HOURS">
+              <PropertyRef Name="SHOP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SHOP">
           <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
           <End Role="SHOP_SPECIALIZATION" Type="Self.SHOP_SPECIALIZATION" Multiplicity="*" />
@@ -330,18 +342,6 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="SHOP_SPECIALIZATION">
-              <PropertyRef Name="SHOP_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SHOP_ID">
-          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
-          <End Role="WORKING_HOURS" Type="Self.WORKING_HOURS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SHOP">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="WORKING_HOURS">
               <PropertyRef Name="SHOP_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -366,7 +366,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="WORKING_HOURS">
-              <PropertyRef Name="DAY_OF_WEK_ID" />
+              <PropertyRef Name="DAY_OF_WEEK_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -390,13 +390,13 @@
             <End Role="SHOP" EntitySet="SHOP" />
             <End Role="PRODUCTS" EntitySet="PRODUCTS" />
           </AssociationSet>
+          <AssociationSet Name="FK_S_ID" Association="Self.FK_S_ID">
+            <End Role="SHOP" EntitySet="SHOP" />
+            <End Role="WORKING_HOURS" EntitySet="WORKING_HOURS" />
+          </AssociationSet>
           <AssociationSet Name="FK_SHOP" Association="Self.FK_SHOP">
             <End Role="SHOP" EntitySet="SHOP" />
             <End Role="SHOP_SPECIALIZATION" EntitySet="SHOP_SPECIALIZATION" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SHOP_ID" Association="Self.FK_SHOP_ID">
-            <End Role="SHOP" EntitySet="SHOP" />
-            <End Role="WORKING_HOURS" EntitySet="WORKING_HOURS" />
           </AssociationSet>
           <AssociationSet Name="FK_S" Association="Self.FK_S">
             <End Role="SPECIALIZATION" EntitySet="SPECIALIZATION" />
@@ -477,7 +477,7 @@
             <EntityTypeMapping TypeName="Model.WORKING_HOURS">
               <MappingFragment StoreEntitySet="WORKING_HOURS">
                 <ScalarProperty Name="SHOP_ID" ColumnName="SHOP_ID" />
-                <ScalarProperty Name="DAY_OF_WEK_ID" ColumnName="DAY_OF_WEK_ID" />
+                <ScalarProperty Name="DAY_OF_WEEK_ID" ColumnName="DAY_OF_WEEK_ID" />
                 <ScalarProperty Name="OPEN_TIME" ColumnName="OPEN_TIME" />
                 <ScalarProperty Name="CLOSE_TIME" ColumnName="CLOSE_TIME" />
               </MappingFragment>
