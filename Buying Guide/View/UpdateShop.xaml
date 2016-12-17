@@ -12,7 +12,7 @@
                 <StackPanel HorizontalAlignment="Left" Width="785">
                     <Grid Height="45">
                         <Label x:Name="Label" Content="Название торговой точки:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155"/>
-                        <TextBox x:Name="Name" HorizontalAlignment="Left" Height="26" Margin="170,10,5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" VerticalContentAlignment="Center"/>
+                        <TextBox x:Name="ShopName" HorizontalAlignment="Left" Height="26" Margin="170,10,5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Height="45">
                         <Label x:Name="label1" Content="Адрес:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155"/>
@@ -20,10 +20,13 @@
                     </Grid>
                     <Grid Height="45">
                         <Label x:Name="label2" Content="Добавить изображение:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155"/>
-                        <TextBox x:Name="Image" HorizontalAlignment="Left" Height="26" Margin="170,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="528" VerticalContentAlignment="Center"/>
+                        <TextBox x:Name="ImageFile" HorizontalAlignment="Left" Height="26" Margin="170,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="528" VerticalContentAlignment="Center" TextChanged="ImageFile_TextChanged"/>
                         <Button x:Name="Choose" Content="Обзор" HorizontalAlignment="Left" Margin="698,10,0,0" VerticalAlignment="Top" Width="72" Height="26"/>
                     </Grid>
-
+                    <Grid Height="45">
+                        <Label x:Name="l" Content="Телефон:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155"/>
+                        <TextBox x:Name="Phone" HorizontalAlignment="Left" Height="26" Margin="170,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" VerticalContentAlignment="Center"/>
+                    </Grid>
                     <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="100" Margin="10,10,-8,0" VerticalAlignment="Top" Width="760">
                         <Grid Name="WT">
                             <Label x:Name="label3" Content="Время работы" HorizontalAlignment="Left" Width="100" Height="30" VerticalAlignment="Top" Margin="0, 0, 0 , 0"/>
@@ -36,20 +39,7 @@
                             <Label x:Name="ThursdayL" Content="Четверг" HorizontalAlignment="Left" Margin="470,0,0,0" VerticalAlignment="Top" Height="30" Width="85" HorizontalContentAlignment="Center"/>
                             <Label x:Name="FridayL" Content="Пятница" HorizontalAlignment="Left" Margin="560,0,0,0" VerticalAlignment="Top" Height="30" Width="85" HorizontalContentAlignment="Center"/>
                             <Label x:Name="SaturdayL" Content="Суббота" HorizontalAlignment="Left" Margin="650,0,0,0" VerticalAlignment="Top" Height="30" Width="85" HorizontalContentAlignment="Center"/>
-                            <xctk:TimePicker Name="SundayO" Height="25" Width="80" Margin="110,30,568,43"/>
-                            <xctk:TimePicker Name="SundayC" Height="25" Width="80" Margin="110,60,568,13"/>
-                            <xctk:TimePicker Name="MondayO" Height="25" Width="80" Margin="200,30,478,43"/>
-                            <xctk:TimePicker Name="MondayC" Height="25" Width="80" Margin="200,60,478,13"/>
-                            <xctk:TimePicker Name="TuesdayO" Height="25" Width="80" Margin="290,30,388,43"/>
-                            <xctk:TimePicker Name="TuesdayC" Height="25" Width="80" Margin="290,60,388,13"/>
-                            <xctk:TimePicker Name="WednesdayO" Height="25" Width="80" Margin="380,30,298,43"/>
-                            <xctk:TimePicker Name="WednesdayC" Height="25" Width="80" Margin="380,60,298,13"/>
-                            <xctk:TimePicker Name="ThursdayO" Height="25" Width="80" Margin="470,30,208,43"/>
-                            <xctk:TimePicker Name="ThursdayC" Height="25" Width="80" Margin="470,60,208,13"/>
-                            <xctk:TimePicker Name="FridayO" Height="25" Width="80" Margin="560,30,118,43"/>
-                            <xctk:TimePicker Name="FridayC" Height="25" Width="80" Margin="560,60,118,13"/>
-                            <xctk:TimePicker Name="SaturdayO" Height="25" Width="80" Margin="650,30,28,43"/>
-                            <xctk:TimePicker Name="SaturdayC" Height="25" Width="80" Margin="650,60,28,13"/>
+                            
                         </Grid>
                     </Border>
 
@@ -70,6 +60,7 @@
                     </Border>
                     <Button x:Name="Update" Content="Обновить" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="760" Background="White" Click="Update_Click"/>
                     <Button x:Name="Cansel" Content="Отмена" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="760" Background="White" Click="Cansel_Click"/>
+                    <Button x:Name="Remove" Content="Удалить торговую точку" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="760" Background="White" Click="RemoveClick"/>
 
                 </StackPanel>
             </InlineUIContainer>

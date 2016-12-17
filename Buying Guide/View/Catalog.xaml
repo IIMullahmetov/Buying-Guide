@@ -18,7 +18,7 @@
             <Grid HorizontalAlignment="Left" Height="32"  VerticalAlignment="Top" Width="965" Margin="0,0,-2,-1">
                 <TextBox x:Name="Query" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="22" Margin="10,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="770" BorderBrush="LightGray" TextChanged="Search_String"/>
                 <Button x:Name="Search" Content="Найти" HorizontalAlignment="Left" Margin="781,5,0,0" VerticalAlignment="Top" Width="80"  BorderBrush="White" Background="White" Click="Search_Click"/>
-                <Button x:Name="Update" Content="Редактировать" HorizontalAlignment="Left" Margin="867,5,0,0" VerticalAlignment="Top" Width="85" Background="White" BorderBrush="White" Click="Update_Click"/>
+                <Button x:Name="Update" Content="Редактировать" HorizontalAlignment="Left" Margin="867,5,0,7" Width="85" Background="White" BorderBrush="White" Click="Update_Click"/>
             </Grid>
         </Border>
         <Border BorderBrush="LightGray" BorderThickness="1" Height="auto" Width="190" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,45,5,0" CornerRadius="2" MinHeight="90">

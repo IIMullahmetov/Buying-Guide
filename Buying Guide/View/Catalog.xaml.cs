@@ -38,8 +38,8 @@ namespace Buying_Guide.View
         
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            AdminWindow admin = new AdminWindow();
-            
+            UpdateShop update = new UpdateShop(Title);
+            update.Show();
         }
     }
 }

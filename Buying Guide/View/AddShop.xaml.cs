@@ -67,6 +67,7 @@ namespace Buying_Guide.View
                     return _ownFormListId[(_ownForms.IndexOf(radioButton.Name))];
             return 0;
         }
+
         private void Cansel_Click(object sender, RoutedEventArgs e)
         {
             Close();
@@ -124,7 +125,7 @@ namespace Buying_Guide.View
             }
             if (!_model.AddWorkHours(list))
             {
-                MessageBox.Show("Сбой при добавлении, проверьте данные и повторите попытку!!!!!!!!!!!!!!");
+                MessageBox.Show("Сбой при добавлении, проверьте данные и повторите попытку");
                 return;
             }
             if(!_model.AddSpecializations(specializatonsList))
