@@ -32,10 +32,10 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SHOP" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="PHONE" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="PHONE" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="ADDRESS" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="OWN_FORM_ID" Type="int" Nullable="false" />
-          <Property Name="IMAGE" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IMAGE" Type="nvarchar" MaxLength="300" Nullable="false" />
         </EntityType>
         <EntityType Name="SHOP_SPECIALIZATION">
           <Key>
@@ -59,19 +59,15 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DAY_OF_WEEK" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "Buying Guide.dbo.WORKING_HOURS" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
         <EntityType Name="WORKING_HOURS">
           <Key>
-            <PropertyRef Name="SHOP_ID" />
-            <PropertyRef Name="DAY_OF_WEEK_ID" />
-            <PropertyRef Name="OPEN_TIME" />
-            <PropertyRef Name="CLOSE_TIME" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="SHOP_ID" Type="int" Nullable="false" />
           <Property Name="DAY_OF_WEEK_ID" Type="int" Nullable="false" />
           <Property Name="OPEN_TIME" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="CLOSE_TIME" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <Association Name="FK_OF_ID">
           <End Role="OWN_FORMS" Type="Self.OWN_FORMS" Multiplicity="1" />
@@ -164,14 +160,7 @@
           <EntitySet Name="SHOP_SPECIALIZATION" EntityType="Self.SHOP_SPECIALIZATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SPECIALIZATION" EntityType="Self.SPECIALIZATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEEK_DAYS" EntityType="Self.WEEK_DAYS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="WORKING_HOURS" EntityType="Self.WORKING_HOURS" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [WORKING_HOURS].[SHOP_ID] AS [SHOP_ID], 
-    [WORKING_HOURS].[DAY_OF_WEEK_ID] AS [DAY_OF_WEEK_ID], 
-    [WORKING_HOURS].[OPEN_TIME] AS [OPEN_TIME], 
-    [WORKING_HOURS].[CLOSE_TIME] AS [CLOSE_TIME]
-    FROM [dbo].[WORKING_HOURS] AS [WORKING_HOURS]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="WORKING_HOURS" EntityType="Self.WORKING_HOURS" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_OF_ID" Association="Self.FK_OF_ID">
             <End Role="OWN_FORMS" EntitySet="OWN_FORMS" />
             <End Role="SHOP" EntitySet="SHOP" />
@@ -236,10 +225,10 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SHOP1" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PHONE" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PHONE" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ADDRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="OWN_FORM_ID" Type="Int32" Nullable="false" />
-          <Property Name="IMAGE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IMAGE" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="OWN_FORMS" Relationship="Self.FK_OF_ID" FromRole="SHOP" ToRole="OWN_FORMS" />
           <NavigationProperty Name="PRODUCTS" Relationship="Self.FK_SH_ID" FromRole="SHOP" ToRole="PRODUCTS" />
           <NavigationProperty Name="WORKING_HOURS" Relationship="Self.FK_S_ID" FromRole="SHOP" ToRole="WORKING_HOURS" />
@@ -274,15 +263,13 @@
         </EntityType>
         <EntityType Name="WORKING_HOURS">
           <Key>
-            <PropertyRef Name="SHOP_ID" />
-            <PropertyRef Name="DAY_OF_WEEK_ID" />
-            <PropertyRef Name="OPEN_TIME" />
-            <PropertyRef Name="CLOSE_TIME" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="SHOP_ID" Type="Int32" Nullable="false" />
           <Property Name="DAY_OF_WEEK_ID" Type="Int32" Nullable="false" />
           <Property Name="OPEN_TIME" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CLOSE_TIME" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="SHOP" Relationship="Self.FK_S_ID" FromRole="WORKING_HOURS" ToRole="SHOP" />
           <NavigationProperty Name="WEEK_DAYS" Relationship="Self.FK_WD_ID" FromRole="WORKING_HOURS" ToRole="WEEK_DAYS" />
         </EntityType>
@@ -480,6 +467,7 @@
                 <ScalarProperty Name="DAY_OF_WEEK_ID" ColumnName="DAY_OF_WEEK_ID" />
                 <ScalarProperty Name="OPEN_TIME" ColumnName="OPEN_TIME" />
                 <ScalarProperty Name="CLOSE_TIME" ColumnName="CLOSE_TIME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

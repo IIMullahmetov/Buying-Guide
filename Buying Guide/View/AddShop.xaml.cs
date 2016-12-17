@@ -117,7 +117,24 @@ namespace Buying_Guide.View
                 return;
             }
             
-            _model.AddShop(Name.Text, Address.Text, Phone.Text, GetOwnFormId(), Image.Text, specializatonsList, list);
+            if (!_model.AddShop(Name.Text, Address.Text, Phone.Text, GetOwnFormId(), Image.Text))
+            {
+                MessageBox.Show("Сбой при добавлении, проверьте данные и повторите попытку");
+                return;
+            }
+            if (!_model.AddWorkHours(list))
+            {
+                MessageBox.Show("Сбой при добавлении, проверьте данные и повторите попытку!!!!!!!!!!!!!!");
+                return;
+            }
+            if(!_model.AddSpecializations(specializatonsList))
+            {
+                MessageBox.Show("Сбой при добавлении, проверьте данные и повторите попытку");
+                return;
+            }
+            
+            MessageBox.Show("Торговая точка успешно добавлена в базу данных");
+            Close();
         }
 
         private bool CheckImageString(string s)

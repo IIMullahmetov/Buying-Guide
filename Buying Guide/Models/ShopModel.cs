@@ -22,6 +22,7 @@ namespace Buying_Guide.Models
         private readonly List<int> _ownFormsId = new List<int>();
         private readonly List<string> _daysOfWeek = new List<string>();
         private readonly List<int> _daysOfWeekId = new List<int>();
+        private SHOP shop;
 
         public ShopModel()
         {
@@ -119,9 +120,9 @@ namespace Buying_Guide.Models
             }
         }
 
-        public void AddShop(string name, string address, string phone, int ownForm, string image, List<string> specializationsList, List<List<TimePicker>> list) 
+        public bool AddShop(string name, string address, string phone, int ownForm, string image) 
         {
-            SHOP shop = new SHOP
+            shop = new SHOP
             {
                 SHOP1 = name,
                 ADDRESS = address,
@@ -134,13 +135,38 @@ namespace Buying_Guide.Models
                 shop.IMAGE = image;
             
             _orm.SHOP.Add(shop);
-           
+            try
+            {
+                _orm.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool AddSpecializations(List<string> specializationsList)
+        {
             List<int> specList = GetSpecializationId(specializationsList);
             foreach (int i in specList)
-                _orm.SHOP_SPECIALIZATION.Add(new SHOP_SPECIALIZATION() {SHOP_ID = shop.ID, SPECIALIZATION_ID = i});
-            for (int i = 0; i < list.Count; i++)
+                _orm.SHOP_SPECIALIZATION.Add(new SHOP_SPECIALIZATION() { SHOP_ID = shop.ID, SPECIALIZATION_ID = i });
+            try
             {
-                shop.WORKING_HOURS.Add(new WORKING_HOURS()
+                _orm.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool AddWorkHours(List<List<TimePicker>> list)
+        {
+            for (int i = 0; i < list[0].Count; i++)
+            {
+                _orm.WORKING_HOURS.Add(new WORKING_HOURS()
                 {
                     OPEN_TIME = list[0][i].Text,
                     CLOSE_TIME = list[1][i].Text,
@@ -149,6 +175,7 @@ namespace Buying_Guide.Models
                 });
             }
             _orm.SaveChanges();
+            return true;
         }
 
 

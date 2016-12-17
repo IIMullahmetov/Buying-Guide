@@ -173,6 +173,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ORM.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ORM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ORM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ORM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ORM.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\OWN_FORMS.cs">
       <DependentUpon>ORM.tt</DependentUpon>
     </Compile>

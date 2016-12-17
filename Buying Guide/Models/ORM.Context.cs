@@ -20,10 +20,10 @@ namespace Buying_Guide.Models
         {
         }
     
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            throw new UnintentionalCodeFirstException();
-        }
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    throw new UnintentionalCodeFirstException();
+        //}
     
         public virtual DbSet<OWN_FORMS> OWN_FORMS { get; set; }
         public virtual DbSet<PRODUCTS> PRODUCTS { get; set; }
