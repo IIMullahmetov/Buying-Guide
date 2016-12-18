@@ -69,6 +69,30 @@
           <Property Name="CLOSE_TIME" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Buying Guide.dbo.HOURS" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="HOURS">
+          <Key>
+            <PropertyRef Name="SHOP_ID" />
+            <PropertyRef Name="DAY_OF_WEEK_ID" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="SHOP_ID" Type="int" Nullable="false" />
+          <Property Name="DAY_OF_WEEK_ID" Type="int" Nullable="false" />
+          <Property Name="OPEN_TIME" Type="nvarchar" MaxLength="5" />
+          <Property Name="CLOSE_TIME" Type="nvarchar" MaxLength="5" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "Buying Guide.dbo.SPECIALIZATION_VIEW" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="SPECIALIZATION_VIEW">
+          <Key>
+            <PropertyRef Name="SHOP_ID" />
+            <PropertyRef Name="SPECIALIZATION_ID" />
+          </Key>
+          <Property Name="SHOP_ID" Type="int" Nullable="false" />
+          <Property Name="SPECIALIZATION_ID" Type="int" Nullable="false" />
+        </EntityType>
         <Association Name="FK_OF_ID">
           <End Role="OWN_FORMS" Type="Self.OWN_FORMS" Multiplicity="1" />
           <End Role="SHOP" Type="Self.SHOP" Multiplicity="*" />
@@ -106,7 +130,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_S_ID">
-          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
+          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="WORKING_HOURS" Type="Self.WORKING_HOURS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SHOP">
@@ -130,7 +156,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SHOP">
-          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
+          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="SHOP_SPECIALIZATION" Type="Self.SHOP_SPECIALIZATION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SHOP">
@@ -153,6 +181,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="insertSpec" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="shopId" Type="int" Mode="In" />
+          <Parameter Name="specId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="insertWorkHours" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dayId" Type="int" Mode="In" />
+          <Parameter Name="shopId" Type="int" Mode="In" />
+          <Parameter Name="open" Type="nvarchar" Mode="In" />
+          <Parameter Name="close" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="Хранилище ModelContainer">
           <EntitySet Name="OWN_FORMS" EntityType="Self.OWN_FORMS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCTS" Schema="dbo" store:Type="Tables" />
@@ -161,6 +199,21 @@
           <EntitySet Name="SPECIALIZATION" EntityType="Self.SPECIALIZATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEEK_DAYS" EntityType="Self.WEEK_DAYS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WORKING_HOURS" EntityType="Self.WORKING_HOURS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HOURS" EntityType="Self.HOURS" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [HOURS].[SHOP_ID] AS [SHOP_ID], 
+    [HOURS].[DAY_OF_WEEK_ID] AS [DAY_OF_WEEK_ID], 
+    [HOURS].[OPEN_TIME] AS [OPEN_TIME], 
+    [HOURS].[CLOSE_TIME] AS [CLOSE_TIME], 
+    [HOURS].[ID] AS [ID]
+    FROM [dbo].[HOURS] AS [HOURS]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SPECIALIZATION_VIEW" EntityType="Self.SPECIALIZATION_VIEW" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SPECIALIZATION_VIEW].[SHOP_ID] AS [SHOP_ID], 
+    [SPECIALIZATION_VIEW].[SPECIALIZATION_ID] AS [SPECIALIZATION_ID]
+    FROM [dbo].[SPECIALIZATION_VIEW] AS [SPECIALIZATION_VIEW]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_OF_ID" Association="Self.FK_OF_ID">
             <End Role="OWN_FORMS" EntitySet="OWN_FORMS" />
             <End Role="SHOP" EntitySet="SHOP" />
@@ -273,6 +326,26 @@
           <NavigationProperty Name="SHOP" Relationship="Self.FK_S_ID" FromRole="WORKING_HOURS" ToRole="SHOP" />
           <NavigationProperty Name="WEEK_DAYS" Relationship="Self.FK_WD_ID" FromRole="WORKING_HOURS" ToRole="WEEK_DAYS" />
         </EntityType>
+        <EntityType Name="HOURS">
+          <Key>
+            <PropertyRef Name="SHOP_ID" />
+            <PropertyRef Name="DAY_OF_WEEK_ID" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="SHOP_ID" Type="Int32" Nullable="false" />
+          <Property Name="DAY_OF_WEEK_ID" Type="Int32" Nullable="false" />
+          <Property Name="OPEN_TIME" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="CLOSE_TIME" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="SPECIALIZATION_VIEW">
+          <Key>
+            <PropertyRef Name="SHOP_ID" />
+            <PropertyRef Name="SPECIALIZATION_ID" />
+          </Key>
+          <Property Name="SHOP_ID" Type="Int32" Nullable="false" />
+          <Property Name="SPECIALIZATION_ID" Type="Int32" Nullable="false" />
+        </EntityType>
         <Association Name="FK_OF_ID">
           <End Role="OWN_FORMS" Type="Self.OWN_FORMS" Multiplicity="1" />
           <End Role="SHOP" Type="Self.SHOP" Multiplicity="*" />
@@ -310,7 +383,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_S_ID">
-          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
+          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="WORKING_HOURS" Type="Self.WORKING_HOURS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SHOP">
@@ -322,7 +397,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SHOP">
-          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
+          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="SHOP_SPECIALIZATION" Type="Self.SHOP_SPECIALIZATION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SHOP">
@@ -365,6 +442,8 @@
           <EntitySet Name="SPECIALIZATION" EntityType="Self.SPECIALIZATION" />
           <EntitySet Name="WEEK_DAYS" EntityType="Self.WEEK_DAYS" />
           <EntitySet Name="WORKING_HOURS" EntityType="Self.WORKING_HOURS" />
+          <EntitySet Name="HOURS" EntityType="Self.HOURS" />
+          <EntitySet Name="SPECIALIZATION_VIEW" EntityType="Self.SPECIALIZATION_VIEW" />
           <AssociationSet Name="FK_OF_ID" Association="Self.FK_OF_ID">
             <End Role="OWN_FORMS" EntitySet="OWN_FORMS" />
             <End Role="SHOP" EntitySet="SHOP" />
@@ -393,6 +472,16 @@
             <End Role="WEEK_DAYS" EntitySet="WEEK_DAYS" />
             <End Role="WORKING_HOURS" EntitySet="WORKING_HOURS" />
           </AssociationSet>
+          <FunctionImport Name="insertSpec">
+            <Parameter Name="shopId" Mode="In" Type="Int32" />
+            <Parameter Name="specId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="insertWorkHours">
+            <Parameter Name="dayId" Mode="In" Type="Int32" />
+            <Parameter Name="shopId" Mode="In" Type="Int32" />
+            <Parameter Name="open" Mode="In" Type="String" />
+            <Parameter Name="close" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -471,6 +560,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="HOURS">
+            <EntityTypeMapping TypeName="Model.HOURS">
+              <MappingFragment StoreEntitySet="HOURS">
+                <ScalarProperty Name="SHOP_ID" ColumnName="SHOP_ID" />
+                <ScalarProperty Name="DAY_OF_WEEK_ID" ColumnName="DAY_OF_WEEK_ID" />
+                <ScalarProperty Name="OPEN_TIME" ColumnName="OPEN_TIME" />
+                <ScalarProperty Name="CLOSE_TIME" ColumnName="CLOSE_TIME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SPECIALIZATION_VIEW">
+            <EntityTypeMapping TypeName="Model.SPECIALIZATION_VIEW">
+              <MappingFragment StoreEntitySet="SPECIALIZATION_VIEW">
+                <ScalarProperty Name="SHOP_ID" ColumnName="SHOP_ID" />
+                <ScalarProperty Name="SPECIALIZATION_ID" ColumnName="SPECIALIZATION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="insertSpec" FunctionName="Хранилище Model.insertSpec" />
+          <FunctionImportMapping FunctionImportName="insertWorkHours" FunctionName="Хранилище Model.insertWorkHours" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Buying_Guide.Models;
@@ -23,8 +22,7 @@ namespace Buying_Guide.View
         private List<string> _shops;
         private List<string> _phone;
         private List<int> _shopsId;
-        private ArrayList _list;
-        
+        private readonly string[] _commands = { "insert", "drop", "delete", "update", "select", "create" };
 
         public AdminWindow()
         {
@@ -89,7 +87,7 @@ namespace Buying_Guide.View
             Label label = new Label
             {
                 Content = address,
-                Margin = new Thickness(0, 0, 6, 48),
+                Margin = new Thickness(0, 0, 6, 25),
                 VerticalAlignment = VerticalAlignment.Bottom,
                 HorizontalAlignment = HorizontalAlignment.Right
             };
@@ -101,7 +99,7 @@ namespace Buying_Guide.View
             Label label = new Label
             {
                 Content = address,
-                Margin = new Thickness(0, 0, 6, 28),
+                Margin = new Thickness(0, 0, 6, 5),
                 VerticalAlignment = VerticalAlignment.Bottom,
                 HorizontalAlignment = HorizontalAlignment.Right
             };
@@ -127,14 +125,26 @@ namespace Buying_Guide.View
        
         private void Search_Click(object sender, RoutedEventArgs e)
         {
+            if (!CheckString(Query.Text))
+            {
+                MessageBox.Show("Попытка взлома, приложение будет закрыто!");
+                Environment.Exit(0);
+            }
             _model.SearchClick(Query.Text);
             CreateWindow();
+        }
+
+        private bool CheckString(string s)
+        {
+            if (s.Length > 50 || _commands.Contains(s.ToLower()))
+                return false;
+            return true;
         }
 
         private void Go(object sender, RoutedEventArgs e)
         {
             Grid grid = (Grid) sender;
-            Catalog catalog = new Catalog(this)
+            Catalog catalog = new Catalog()
             {
                 Title = grid.Name.Replace("n", "")
             };

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1847c43718b04f248022c8e1fc7e8000" Name="Diagram1">
+      <Diagram DiagramId="771d7914651749d49a2bf065d57dda9e" Name="Diagram1">
         <EntityTypeShape EntityType="Model.OWN_FORMS" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.PRODUCTS" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.SHOP" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
@@ -12,6 +12,8 @@
         <EntityTypeShape EntityType="Model.SPECIALIZATION" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.WEEK_DAYS" Width="1.5" PointX="6" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.WORKING_HOURS" Width="1.5" PointX="8.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.HOURS" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.SPECIALIZATION_VIEW" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
         <AssociationConnector Association="Model.FK_OF_ID" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_PRODUCTS_SPECIALIZATION" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_SH_ID" ManuallyRouted="false" />

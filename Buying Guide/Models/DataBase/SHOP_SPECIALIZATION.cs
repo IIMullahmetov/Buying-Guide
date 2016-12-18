@@ -7,20 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Buying_Guide.Models
+namespace Buying_Guide.Models.DataBase
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class WORKING_HOURS
+    public partial class SHOP_SPECIALIZATION
     {
         public int SHOP_ID { get; set; }
-        public int DAY_OF_WEEK_ID { get; set; }
-        public string OPEN_TIME { get; set; }
-        public string CLOSE_TIME { get; set; }
+        public int SPECIALIZATION_ID { get; set; }
         public int ID { get; set; }
     
         public virtual SHOP SHOP { get; set; }
-        public virtual WEEK_DAYS WEEK_DAYS { get; set; }
+        public virtual SPECIALIZATION SPECIALIZATION { get; set; }
     }
 }

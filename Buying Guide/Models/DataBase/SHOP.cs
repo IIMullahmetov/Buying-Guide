@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Buying_Guide.Models
+namespace Buying_Guide.Models.DataBase
 {
     using System;
     using System.Collections.Generic;

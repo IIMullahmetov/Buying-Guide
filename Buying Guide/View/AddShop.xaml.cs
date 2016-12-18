@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +23,7 @@ namespace Buying_Guide.View
         private readonly string _pattern;
         private readonly List<string> _weekDays;
         private List<List<TimePicker>> list = new List<List<TimePicker>>();
+        private readonly string[] _commands = {"insert", "drop", "delete", "update", "select", "create"};
 
 
         private readonly List<string> _ownForms;
@@ -140,13 +142,13 @@ namespace Buying_Guide.View
 
         private bool CheckImageString(string s)
         {
-            if (s.ToLower().Contains("drop") || s.ToLower().Contains("insert") || s.ToLower().Contains("select") || s.ToLower().Contains("update"))
+            if (_commands.Contains(s.ToLower()) || s.Length > 300)
                 return false;
             return true;
         }
         private bool CheckString(string s)
         {
-            if (s.ToLower().Contains("drop") || s.ToLower().Contains("insert") || s.ToLower().Contains("select") || s.ToLower().Contains("update"))
+            if (s.Length > 50 || _commands.Contains(s.ToLower()))
                 return false;
             if (s.Replace(" ", "") == "")
                 return false;

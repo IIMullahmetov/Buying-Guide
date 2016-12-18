@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Windows.Documents;
+using Buying_Guide.Models.DataBase;
 using Xceed.Wpf.Toolkit;
 
 namespace Buying_Guide.Models
@@ -158,7 +160,7 @@ namespace Buying_Guide.Models
         {
             List<int> specList = GetSpecializationId(specializationsList);
             foreach (int i in specList)
-                _orm.SHOP_SPECIALIZATION.Add(new SHOP_SPECIALIZATION() { SHOP_ID = shop.ID, SPECIALIZATION_ID = i });
+                _orm.insertSpec(shop.ID, i);
             try
             {
                 _orm.SaveChanges();
@@ -174,14 +176,15 @@ namespace Buying_Guide.Models
         {
             for (int i = 0; i < list[0].Count; i++)
             {
-                _orm.WORKING_HOURS.Add(new WORKING_HOURS()
-                {
-                    OPEN_TIME = list[0][i].Text,
-                    CLOSE_TIME = list[1][i].Text,
-                    DAY_OF_WEEK_ID = _daysOfWeekId[i],
-                    SHOP_ID = shop.ID
-                });
-                _orm.SaveChanges();
+                _orm.insertWorkHours(_daysOfWeekId[i], shop.ID, list[0][i].Text, list[1][i].Text);
+                //_orm.WORKING_HOURS.Add(new WORKING_HOURS()
+                //{
+                //    OPEN_TIME = list[0][i].Text,
+                //    CLOSE_TIME = list[1][i].Text,
+                //    DAY_OF_WEEK_ID = _daysOfWeekId[i],
+                //    SHOP_ID = shop.ID
+                //});
+                //_orm.SaveChanges();
             }
             return true;
         }
@@ -275,6 +278,18 @@ namespace Buying_Guide.Models
                 _addresses.Add(shop.ADDRESS);
                 _images.Add(shop.IMAGE);
                 _phones.Add(shop.PHONE);
+            }
+        }
+
+        public void Generate()
+        {
+            var list = GetShopsId();
+            foreach (int i in list)
+            {
+                foreach (int i1 in _daysOfWeekId)
+                {
+                    _orm.insertWorkHours(i1, i, "08:00", "22:00");
+                }
             }
         }
     }

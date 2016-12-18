@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EntityFramework.Extensions;
+using Buying_Guide.Models.DataBase;
 using Xceed.Wpf.Toolkit;
 
 namespace Buying_Guide.Models
@@ -88,7 +87,7 @@ namespace Buying_Guide.Models
 
         public List<string> GetSpecializations()
         {
-            var specializations = from shop_spec in _orm.SHOP_SPECIALIZATION
+            var specializations = from shop_spec in _orm.SPECIALIZATION_VIEW    
                 where shop_spec.SHOP_ID == _id
                 join specialization in _orm.SPECIALIZATION on shop_spec.SPECIALIZATION_ID equals specialization.ID
                 select new {specialization.SPECIALIZATION1};
@@ -113,11 +112,12 @@ namespace Buying_Guide.Models
         {
             var shop = _orm.SHOP.First(s => s.ID == _id);
             shop.SHOP1 = name;
+            
             shop.ADDRESS = address;
             shop.IMAGE = image;
             shop.PHONE = phone;
             shop.OWN_FORM_ID = ownForm;
-
+            
             foreach (var i in _weekDaysId)
             {
                 WORKING_HOURS workingHours = _orm.WORKING_HOURS.First(w => w.SHOP_ID == _id);
@@ -154,13 +154,14 @@ namespace Buying_Guide.Models
             {
                 _orm.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
             return true;
         }
 
+        
         public string GetAddress()
         {
             var n = from shop in _orm.SHOP
@@ -196,37 +197,19 @@ namespace Buying_Guide.Models
 
         public bool Remove()
         {
+            
             try
             {
-                using (_orm)
-                {
-                    var specializations = GetSpecializations();
-                    foreach (var specialization in specializations)
-                    {
-                        SHOP_SPECIALIZATION shopSpecialization = _orm.SHOP_SPECIALIZATION.First(s => s.SHOP_ID == _id);
-                        _orm.SHOP_SPECIALIZATION.Attach(shopSpecialization);
-                        _orm.SHOP_SPECIALIZATION.Remove(shopSpecialization);
-                        _orm.SaveChanges();
-                    }
-                    foreach (var i in _weekDaysId)
-                    {
-                        WORKING_HOURS workingHours = _orm.WORKING_HOURS.First(w => w.SHOP_ID == _id);
-                        _orm.WORKING_HOURS.Attach(workingHours);
-                        _orm.WORKING_HOURS.Remove(workingHours);
-                        _orm.SaveChanges();
-                    }
-
-                    SHOP shop = _orm.SHOP.First(s => s.ID == _id);
-                    _orm.SHOP.Attach(shop);
-                    _orm.SHOP.Remove(shop);
-                    _orm.SaveChanges();
-                }
+                SHOP shop = _orm.SHOP.First(s => s.ID == _id);
+                _orm.SHOP.Attach(shop);
+                _orm.SHOP.Remove(shop);
+                _orm.SaveChanges();
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException)
             {
                 return false;
             }
-            catch (AggregateException e)
+            catch (AggregateException)
             {
                 return false;
             }

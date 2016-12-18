@@ -173,45 +173,50 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\CatalogModel.cs" />
-    <Compile Include="Models\ORM.Context.cs">
+    <Compile Include="Models\DataBase\HOURS.cs">
+      <DependentUpon>ORM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataBase\ORM.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ORM.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ORM.cs">
+    <Compile Include="Models\DataBase\ORM.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ORM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ORM.Designer.cs">
+    <Compile Include="Models\DataBase\ORM.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ORM.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\OWN_FORMS.cs">
+    <Compile Include="Models\DataBase\OWN_FORMS.cs">
       <DependentUpon>ORM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\PRODUCTS.cs">
+    <Compile Include="Models\DataBase\PRODUCTS.cs">
       <DependentUpon>ORM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SHOP.cs">
+    <Compile Include="Models\DataBase\SHOP.cs">
+      <DependentUpon>ORM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataBase\SHOP_SPECIALIZATION.cs">
+      <DependentUpon>ORM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataBase\SPECIALIZATION.cs">
+      <DependentUpon>ORM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataBase\SPECIALIZATION_VIEW.cs">
+      <DependentUpon>ORM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataBase\WEEK_DAYS.cs">
+      <DependentUpon>ORM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataBase\WORKING_HOURS.cs">
       <DependentUpon>ORM.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShopModel.cs" />
-    <Compile Include="Models\SHOP_SPECIALIZATION.cs">
-      <DependentUpon>ORM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SPECIALIZATION.cs">
-      <DependentUpon>ORM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Update.cs" />
-    <Compile Include="Models\WEEK_DAYS.cs">
-      <DependentUpon>ORM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WORKING_HOURS.cs">
-      <DependentUpon>ORM.tt</DependentUpon>
-    </Compile>
     <Compile Include="View\Catalog.xaml.cs">
       <DependentUpon>Catalog.xaml</DependentUpon>
     </Compile>
@@ -264,11 +269,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Models\ORM.edmx">
+    <EntityDeploy Include="Models\DataBase\ORM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ORM.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\ORM.edmx.diagram">
+    <None Include="Models\DataBase\ORM.edmx.diagram">
       <DependentUpon>ORM.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
@@ -310,12 +315,12 @@
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Models\ORM.Context.tt">
+    <Content Include="Models\DataBase\ORM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ORM.edmx</DependentUpon>
       <LastGenOutput>ORM.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ORM.tt">
+    <Content Include="Models\DataBase\ORM.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ORM.edmx</DependentUpon>
       <LastGenOutput>ORM.cs</LastGenOutput>

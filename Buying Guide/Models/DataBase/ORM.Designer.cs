@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "C:\Users\IIMul\google диск\google documents\visual studio 2015\Buying Guide\Buying Guide\Models\ORM.edmx" включено. 
+﻿// Создание кода T4 для модели "C:\Users\IIMul\google диск\google documents\visual studio 2015\Buying Guide\Buying Guide\Models\DataBase\ORM.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

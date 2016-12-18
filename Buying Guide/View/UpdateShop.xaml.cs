@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Buying_Guide.Models;
 using Xceed.Wpf.Toolkit;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -22,7 +25,7 @@ namespace Buying_Guide.ViewModel
         private readonly List<int> _ownFormListId;
         private readonly List<string> _ownForms;
         private readonly string _pattern;
-
+        private readonly string[] _commands = { "insert", "drop", "delete", "update", "select", "create" };
 
         public UpdateShop(string i)
         {
@@ -135,7 +138,7 @@ namespace Buying_Guide.ViewModel
                 !_update.UpdateShop(ShopName.Text, Address.Text, ImageFile.Text, Phone.Text, specializatonsList, GetOwnFormId(), list))
                 MessageBox.Show(@"Ошибка при обновлении данных");
             Close();
-            MessageBox.Show(@"Заебись");
+            MessageBox.Show(@"Торговая точка успешно обновлена");
         }
 
         private int GetOwnFormId()
@@ -148,13 +151,14 @@ namespace Buying_Guide.ViewModel
 
         private bool CheckImageString(string s)
         {
-            if (s.ToLower().Contains("drop") || s.ToLower().Contains("insert") || s.ToLower().Contains("select") || s.ToLower().Contains("update"))
+            if (_commands.Contains(s.ToLower()) || s.Length > 300)
                 return false;
             return true;
         }
+
         private bool CheckString(string s)
         {
-            if (s.ToLower().Contains("drop") || s.ToLower().Contains("insert") || s.ToLower().Contains("select") || s.ToLower().Contains("update"))
+            if (s.Length > 50 || _commands.Contains(s.ToLower()))
                 return false;
             if (s.Replace(" ", "") == "")
                 return false;
