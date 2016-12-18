@@ -15,14 +15,14 @@ namespace Buying_Guide.View
     public partial class Catalog : Window
     {
         private List<string> _products = new List<string>();
-        private readonly CatalogModel _model = new CatalogModel();
-        private readonly AdminWindow _adminWindow;
+        private readonly CatalogModel _model;
         private List<string> _images;
         private List<string> _descriptions;
         private List<int> _counts;
         private List<Decimal> _prices;
-        public Catalog( )
+        public Catalog(string t)
         {
+            _model = new CatalogModel(t);  
             InitializeComponent();
             Initialize();
         }
@@ -46,6 +46,7 @@ namespace Buying_Guide.View
         private UIElement GetIsHaving(int i)
         {
             Label label = new Label();
+            label.Margin = new Thickness(100, 5, 0, 5);
             if (_counts[i] != 0)
                 label.Content = _prices[i].ToString();
             else
@@ -53,16 +54,18 @@ namespace Buying_Guide.View
             return label;
         }
 
-        private UIElement GetLabel(int i)
+        private UIElement GetText(int i)
         {
-            Label label = new Label()
+            TextBox textBox = new TextBox()
             {
-                Content = _descriptions[i]
-
+                Background = Brushes.AliceBlue,
+                Margin = new Thickness(80, 50, 0, 5),
+                Width = 590,
+                Text = _descriptions[i]
             };
-            return label;
+            return textBox;
         }
-
+        
         private void Search_String(object sender, TextChangedEventArgs e)
         {
 
@@ -76,7 +79,6 @@ namespace Buying_Guide.View
 
         private Grid GetGrid(int i)
         {
-            GC.Collect();
             Grid grid = new Grid
             {
                 Height = 100,
@@ -86,7 +88,7 @@ namespace Buying_Guide.View
             };
             grid.Children.Add(GetImageGrid(_images[i]));
             grid.Children.Add(GetIsHaving(i));
-            grid.Children.Add(GetLabel(i));
+            grid.Children.Add(GetText(i));
             return grid;
         }
 

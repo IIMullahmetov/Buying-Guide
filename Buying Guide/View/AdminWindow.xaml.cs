@@ -145,7 +145,7 @@ namespace Buying_Guide.View
         private void Go(object sender, RoutedEventArgs e)
         {
             Grid grid = (Grid) sender;
-            Catalog catalog = new Catalog()
+            Catalog catalog = new Catalog(grid.Name.Replace("n", ""))
             {
                 Title = grid.Name.Replace("n", "")
             };

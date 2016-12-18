@@ -181,6 +181,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ORM.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataBase\ORM.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ORM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DataBase\OWN_FORMS.cs">
       <DependentUpon>ORM.tt</DependentUpon>
     </Compile>

@@ -12,8 +12,13 @@ namespace Buying_Guide.Models
     {
         private readonly ORM _orm = new ORM();
         private List<PRODUCTS> _products = new List<PRODUCTS>();
-        
+        private int _id;
 
+        public CatalogModel(string i)
+        {
+            int id = Convert.ToInt32(i);
+            _id = id;
+        }
         public void Find(string name)
         {
             var product = from products in _orm.PRODUCTS
@@ -29,6 +34,7 @@ namespace Buying_Guide.Models
         {
             List<Decimal> list = new List<Decimal>();
             var products = from p in _orm.PRODUCTS
+                           where p.SHOP_ID == _id
                            select new { p.PRICE };
             foreach (var product in products)
             {
@@ -40,6 +46,7 @@ namespace Buying_Guide.Models
         {
             List<int> list = new List<int>();
             var products = from p in _orm.PRODUCTS
+                           where p.SHOP_ID == _id
                            select new { p.COUNT };
             foreach (var product in products)
             {
@@ -51,6 +58,7 @@ namespace Buying_Guide.Models
         {
             List<string> list = new List<string>();
             var products = from p in _orm.PRODUCTS
+                           where p.SHOP_ID == _id
                            select new { p.DESCRIPTION };
             foreach (var product in products)
             {
@@ -63,6 +71,7 @@ namespace Buying_Guide.Models
         {
             List<string> list = new List<string>();
             var products = from p in _orm.PRODUCTS
+                           where p.SHOP_ID == _id
                 select new { p.PRODUCT };
             foreach (var product in products)
             {
@@ -75,7 +84,8 @@ namespace Buying_Guide.Models
         {
             List<string> list = new List<string>();
             var products = from p in _orm.PRODUCTS
-                select new {p.IMAGE};
+                           where p.SHOP_ID == _id
+                           select new {p.IMAGE};
             foreach (var product in products)
             {
                 list.Add(product.IMAGE);
