@@ -29,15 +29,13 @@ namespace Buying_Guide.View
 
         private void Initialize()
         {
+            _prices = _model.GetPrice();
             _descriptions = _model.GetDiscription();
             _images = _model.GetImages();
             _products = _model.GetProducts();
             _counts = _model.GetCount();
             for(int i = 0; i < _products.Count; i++)
-            {
                 StackPanel.Children.Add(GetGrid(i));
-              
-            }
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)

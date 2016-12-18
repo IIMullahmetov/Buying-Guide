@@ -12,7 +12,7 @@ namespace Buying_Guide.Models
 {
     class ShopModel
     {
-        //private List<ArrayList> list = new List<ArrayList>();
+        //Создаем всяческие листы, необходимые для отображения и редактирования
         private readonly List<string> _addresses = new List<string>();
         private readonly List<string> _images = new List<string>();
         private readonly List<string> _shops = new List<string>();
@@ -21,19 +21,19 @@ namespace Buying_Guide.Models
         private readonly List<int> _specializationsId = new List<int>();
         private readonly List<string> _phones = new List<string>();
         private readonly List<string> _ownForms = new List<string>();
-        private readonly ORM _orm = new ORM();
+        private readonly ORM _orm = new ORM();//создаем контекст для работы с базой данных 
         private readonly List<int> _ownFormsId = new List<int>();
         private readonly List<string> _daysOfWeek = new List<string>();
         private readonly List<int> _daysOfWeekId = new List<int>();
-        private SHOP shop;
+        private SHOP shop; //Не инициализированный объект сущности, дальше будет нужен для добавления данных в БД
 
         public ShopModel()
         {
-            var shopInfo =
+            var shopInfo = //получаем поля из таблицы Шоп и вроде бы все
                 from shop in _orm.SHOP
                 select new {shop.ID, shop.SHOP1, shop.IMAGE, shop.ADDRESS, shop.PHONE};
 
-            foreach (var shop in shopInfo)
+            foreach (var shop in shopInfo) //добавляем эти поля в соответсвующие листы, они периодически будут нам нужны
             {
                 _shopsId.Add(shop.ID);
                 _shops.Add(shop.SHOP1);
@@ -42,7 +42,7 @@ namespace Buying_Guide.Models
                 _phones.Add(shop.PHONE);
             }
 
-            var specializations = from spec in _orm.SPECIALIZATION
+            var specializations = from spec in _orm.SPECIALIZATION //получаем специализации и 48-52 строках добавляем их в листы
                 select new {spec.SPECIALIZATION1, spec.ID};
 
             foreach (var specialization in specializations)
@@ -50,8 +50,8 @@ namespace Buying_Guide.Models
                 _specializations.Add(specialization.SPECIALIZATION1);
                 _specializationsId.Add(specialization.ID);
             }
-            var ownForms = from of in _orm.OWN_FORMS
-                select new { of.OWN_FORMS1, of.ID};
+            var ownForms = from of in _orm.OWN_FORMS//получем формы собственности и так их добавляем в листы
+                           select new { of.OWN_FORMS1, of.ID};
 
             foreach (var ownForm in ownForms)
             {
@@ -59,8 +59,8 @@ namespace Buying_Guide.Models
                 _ownFormsId.Add(ownForm.ID);
             }
 
-            var dow = from d in _orm.WEEK_DAYS
-                select new {d.DAY_OF_WEEK, d.ID};
+            var dow = from d in _orm.WEEK_DAYS//опять получаем дни недели и суем их в листы
+                      select new {d.DAY_OF_WEEK, d.ID};
             foreach (var day in dow)
             {
                 _daysOfWeek.Add(day.DAY_OF_WEEK);
@@ -68,12 +68,12 @@ namespace Buying_Guide.Models
             }
         }
 
-        public List<int> GetShopsId()
+        public List<int> GetShopsId()// возвращает лист с АЙДИшками магазина
         {
             return _shopsId;
         }
 
-        public List<string> GetWeekDays()
+        public List<string> GetWeekDays()//возвращает дни недели и так еще все методы с 76 по 115 возвращают соответсвующие таблицы
         {
             return _daysOfWeek;
         }
@@ -113,7 +113,7 @@ namespace Buying_Guide.Models
             return _phones;
         }
 
-        public void SearchClick(string parametr)
+        public void SearchClick(string parametr)//вызывается при нажатии кнопки найти в главном окне, получает параметр и ищет наличие данной подстроки в названии магазина
         {
             var shopInfo =
                 from shop in _orm.SHOP
@@ -130,40 +130,40 @@ namespace Buying_Guide.Models
             }
         }
 
-        public bool AddShop(string name, string address, string phone, int ownForm, string image) 
+        public bool AddShop(string name, string address, string phone, int ownForm, string image)//это вызывается при добавлении магазина, он добавляет данные в таблицу SHOP 
         {
-            shop = new SHOP
+            shop = new SHOP//присваиваем созданному заранее экземпляру магазина новую ссылку и присваиваем его полям значение
             {
                 SHOP1 = name,
                 ADDRESS = address,
                 PHONE = phone,
                 OWN_FORM_ID = ownForm,
-                IMAGE = @"..\..\Images\not found.jpg"
+                IMAGE = @"..\..\Images\not found.jpg"//значение по умолчанию задано, но я все решил написать какой файл изображения будет если ничего не добавлять
             };
 
             if (File.Exists(image))
-                shop.IMAGE = image;
-            
-            _orm.SHOP.Add(shop);
+                shop.IMAGE = image;//путь менятся только если изображение существует
+
+            _orm.SHOP.Add(shop);//добавляем данный экземпляр в базу данных, фактический готовится запрос на добавление, но еще не выполняется
             try
             {
-                _orm.SaveChanges();
+                _orm.SaveChanges(); //вот щас выполняется наш запрос в случае ошибки вернется boolean значение false и выводтся соответсвующая ошибка пользователю
             }
             catch (Exception e)
             {
                 return false;
             }
-            return true;
+            return true;//иначе начинается добавление данных в другие таблицы
         }
 
-        public bool AddSpecializations(List<string> specializationsList)
+        public bool AddSpecializations(List<string> specializationsList)//например сюда
         {
             List<int> specList = GetSpecializationId(specializationsList);
             foreach (int i in specList)
-                _orm.insertSpec(shop.ID, i);
+                _orm.insertSpec(shop.ID, i);//токо здесь по другому, вызывается процедура добавления, котрый описан в методы insertSpec в классе ORM
             try
             {
-                _orm.SaveChanges();
+                _orm.SaveChanges();//снова сохраняем
             }
             catch (Exception e)
             {
@@ -172,34 +172,23 @@ namespace Buying_Guide.Models
             return true;
         }
 
-        public bool AddWorkHours(List<List<TimePicker>> list)
+        public bool AddWorkHours(List<List<TimePicker>> list)//добавляем времена работы, а время работы мы берем из экземпляров графики попытка ввести фигню, все равно отработает правильно и без лагов
         {
             for (int i = 0; i < list[0].Count; i++)
-            {
                 _orm.insertWorkHours(_daysOfWeekId[i], shop.ID, list[0][i].Text, list[1][i].Text);
-                //_orm.WORKING_HOURS.Add(new WORKING_HOURS()
-                //{
-                //    OPEN_TIME = list[0][i].Text,
-                //    CLOSE_TIME = list[1][i].Text,
-                //    DAY_OF_WEEK_ID = _daysOfWeekId[i],
-                //    SHOP_ID = shop.ID
-                //});
-                //_orm.SaveChanges();
-            }
             return true;
         }
 
 
-        private List<int> GetSpecializationId(List<string> specializationsList)
+        private List<int> GetSpecializationId(List<string> specializationsList)//этот метод возвращет АйДи полей по которым специализируется магазин
         {
             List<int> list = new List<int>();
             foreach (string s in specializationsList)
                 list.Add(_specializationsId[_specializations.IndexOf(s)]);
-
             return list;
         }
         
-        private void ClearList()
+        private void ClearList()//здесь очищаем листы, это надо для поиска магазина
         {
             _shopsId.Clear();
             _shops.Clear();
@@ -207,7 +196,7 @@ namespace Buying_Guide.Models
             _images.Clear();
             _phones.Clear();
         }
-        public void Find(string ownForm)
+        public void Find(string ownForm)//метод выполняет подбор, если указана только форма собственности
         {
             var shopInfo = from shop in _orm.SHOP
                 join form in _orm.OWN_FORMS on shop.OWN_FORM_ID equals form.ID
@@ -226,7 +215,7 @@ namespace Buying_Guide.Models
             }
         }
 
-        public void Find(List<string> list, string ownForm)
+        public void Find(List<string> list, string ownForm)//метод выполняет подбор если указаны и специализации и форма собственности 
         {
             var spec = GetSpecializationId(list);
             ClearList();
@@ -246,7 +235,7 @@ namespace Buying_Guide.Models
             }
         }
 
-        public void Find(List<string> specializationList)
+        public void Find(List<string> specializationList)//а этот подбирает если указана только форма собственности 
         {
             ClearList();
 
@@ -265,7 +254,7 @@ namespace Buying_Guide.Models
             }
         }
 
-        public void UpdateWindow()
+        public void UpdateWindow() //вызывается когда нажата кнопка обновить на главной странице, очищает листы, заново получает данные из бд а окошко их показывает
         {
             var shopInfo =
                 from shop in _orm.SHOP
@@ -281,7 +270,7 @@ namespace Buying_Guide.Models
             }
         }
 
-        public void Generate()
+        public void Generate()//метод на всякии случай, был нужен для генерации времени работы, когда все полетело к чертям
         {
             var list = GetShopsId();
             foreach (int i in list)

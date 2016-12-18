@@ -24,7 +24,8 @@ namespace Buying_Guide.View
         private List<int> _shopsId;
         private readonly string[] _commands = { "insert", "drop", "delete", "update", "select", "create" };
 
-        public AdminWindow()
+        //Данный класс отвечает за отображение элементов в стартовом окне, графику объяснять сложнааа, поэтому лучше перейти в классы в папке Models, сперва ShopModel
+        public AdminWindow()// Инициализируем объекты
         {
             InitializeComponent();
             List<string> specializations = _model.GetSpecialzations();
@@ -49,7 +50,7 @@ namespace Buying_Guide.View
                 });
             CreateWindow();
 
-        }
+        } 
 
         private void CreateWindow()
         {
