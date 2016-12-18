@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Buying_Guide.Models;
+using Buying_Guide.View;
 using Xceed.Wpf.Toolkit;
 using MessageBox = System.Windows.Forms.MessageBox;
 
@@ -26,9 +27,11 @@ namespace Buying_Guide.ViewModel
         private readonly List<string> _ownForms;
         private readonly string _pattern;
         private readonly string[] _commands = { "insert", "drop", "delete", "update", "select", "create" };
+        private readonly Catalog _catalog;
 
-        public UpdateShop(string i)
+        public UpdateShop(string i, Catalog catalog)
         {
+            _catalog = catalog;
             InitializeComponent();
             _pattern = @"^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$";
             int id = Convert.ToInt32(i);    
@@ -216,6 +219,8 @@ namespace Buying_Guide.ViewModel
                 MessageBox.Show(@"Ошибка при удалении");
             else
                 MessageBox.Show(@"Торговая точка успешно удалена");
+            Close();
+            _catalog.Close();
         }
     }
 }

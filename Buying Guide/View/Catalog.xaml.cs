@@ -73,7 +73,7 @@ namespace Buying_Guide.View
         
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            UpdateShop update = new UpdateShop(Title);
+            UpdateShop update = new UpdateShop(Title, this);
             update.Show();
         }
 
