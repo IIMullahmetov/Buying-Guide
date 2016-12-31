@@ -172,6 +172,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CommandReference.cs" />
+    <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Models\CatalogModel.cs" />
     <Compile Include="Models\DataBase\HOURS.cs">
       <DependentUpon>ORM.tt</DependentUpon>
@@ -185,6 +187,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ORM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataBase\ORM.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ORM.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\DataBase\OWN_FORMS.cs">
       <DependentUpon>ORM.tt</DependentUpon>
@@ -212,6 +219,9 @@
     </Compile>
     <Compile Include="Models\ShopModel.cs" />
     <Compile Include="Models\Update.cs" />
+    <Compile Include="ViewModel\Admin.cs" />
+    <Compile Include="ViewModel\UpdateViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\Catalog.xaml.cs">
       <DependentUpon>Catalog.xaml</DependentUpon>
     </Compile>
@@ -301,14 +311,11 @@
     <Resource Include="Images\эссен.png" />
     <Resource Include="Images\карусель.png" />
     <Resource Include="Images\метро.png" />
-    <Resource Include="Images\лента.jpg" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Models\DataBase\ORM.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -320,6 +327,7 @@
       <DependentUpon>ORM.edmx</DependentUpon>
       <LastGenOutput>ORM.cs</LastGenOutput>
     </Content>
+    <Content Include="script.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

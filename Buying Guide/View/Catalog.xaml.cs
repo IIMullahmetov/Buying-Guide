@@ -20,8 +20,10 @@ namespace Buying_Guide.View
         private List<string> _descriptions;
         private List<int> _counts;
         private List<Decimal> _prices;
+        private readonly AdminWindow _admin;
         public Catalog(string t)
         {
+
             _model = new CatalogModel(t);  
             InitializeComponent();
             Initialize();
@@ -73,8 +75,11 @@ namespace Buying_Guide.View
         
         private void Update_Click(object sender, RoutedEventArgs e)
         {
-            UpdateShop update = new UpdateShop(Title, this);
-            update.Show();
+            UpdateShop view = new UpdateShop();
+            UpdateViewModel viewModel = new UpdateViewModel(Title, this);
+            view.DataContext = viewModel;
+            view.Show();
+
         }
 
         private Grid GetGrid(int i)

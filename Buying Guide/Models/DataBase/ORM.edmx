@@ -17,14 +17,12 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PRODUCT" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="PRODUCT" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="nvarchar" MaxLength="400" Nullable="false" />
           <Property Name="SHOP_ID" Type="int" Nullable="false" />
           <Property Name="PRICE" Type="money" Nullable="false" />
-          <Property Name="IMAGE" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="IS_EXISTS" Type="bit" Nullable="false" />
+          <Property Name="IMAGE" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="COUNT" Type="int" Nullable="false" />
-          <Property Name="CATEGORY" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SHOP">
           <Key>
@@ -105,18 +103,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PRODUCTS_SPECIALIZATION">
-          <End Role="SPECIALIZATION" Type="Self.SPECIALIZATION" Multiplicity="1" />
-          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SPECIALIZATION">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PRODUCTS">
-              <PropertyRef Name="CATEGORY" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_S">
           <End Role="SPECIALIZATION" Type="Self.SPECIALIZATION" Multiplicity="1" />
           <End Role="SHOP_SPECIALIZATION" Type="Self.SHOP_SPECIALIZATION" Multiplicity="*" />
@@ -144,7 +130,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SH_ID">
-          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
+          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SHOP">
@@ -218,10 +206,6 @@
             <End Role="OWN_FORMS" EntitySet="OWN_FORMS" />
             <End Role="SHOP" EntitySet="SHOP" />
           </AssociationSet>
-          <AssociationSet Name="FK_PRODUCTS_SPECIALIZATION" Association="Self.FK_PRODUCTS_SPECIALIZATION">
-            <End Role="SPECIALIZATION" EntitySet="SPECIALIZATION" />
-            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
-          </AssociationSet>
           <AssociationSet Name="FK_S" Association="Self.FK_S">
             <End Role="SPECIALIZATION" EntitySet="SPECIALIZATION" />
             <End Role="SHOP_SPECIALIZATION" EntitySet="SHOP_SPECIALIZATION" />
@@ -261,15 +245,12 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PRODUCT" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DESCRIPTION" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PRODUCT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SHOP_ID" Type="Int32" Nullable="false" />
           <Property Name="PRICE" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="IMAGE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IS_EXISTS" Type="Boolean" Nullable="false" />
+          <Property Name="IMAGE" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="COUNT" Type="Int32" Nullable="false" />
-          <Property Name="CATEGORY" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="SPECIALIZATION" Relationship="Self.FK_PRODUCTS_SPECIALIZATION" FromRole="PRODUCTS" ToRole="SPECIALIZATION" />
           <NavigationProperty Name="SHOP" Relationship="Self.FK_SH_ID" FromRole="PRODUCTS" ToRole="SHOP" />
         </EntityType>
         <EntityType Name="SHOP">
@@ -303,7 +284,6 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SPECIALIZATION1" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="PRODUCTS" Relationship="Self.FK_PRODUCTS_SPECIALIZATION" FromRole="SPECIALIZATION" ToRole="PRODUCTS" />
           <NavigationProperty Name="SHOP_SPECIALIZATION" Relationship="Self.FK_S" FromRole="SPECIALIZATION" ToRole="SHOP_SPECIALIZATION" />
         </EntityType>
         <EntityType Name="WEEK_DAYS">
@@ -358,20 +338,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PRODUCTS_SPECIALIZATION">
-          <End Role="SPECIALIZATION" Type="Self.SPECIALIZATION" Multiplicity="1" />
-          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SPECIALIZATION">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PRODUCTS">
-              <PropertyRef Name="CATEGORY" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SH_ID">
-          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1" />
+          <End Role="SHOP" Type="Self.SHOP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SHOP">
@@ -448,10 +418,6 @@
             <End Role="OWN_FORMS" EntitySet="OWN_FORMS" />
             <End Role="SHOP" EntitySet="SHOP" />
           </AssociationSet>
-          <AssociationSet Name="FK_PRODUCTS_SPECIALIZATION" Association="Self.FK_PRODUCTS_SPECIALIZATION">
-            <End Role="SPECIALIZATION" EntitySet="SPECIALIZATION" />
-            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
-          </AssociationSet>
           <AssociationSet Name="FK_SH_ID" Association="Self.FK_SH_ID">
             <End Role="SHOP" EntitySet="SHOP" />
             <End Role="PRODUCTS" EntitySet="PRODUCTS" />
@@ -506,9 +472,7 @@
                 <ScalarProperty Name="SHOP_ID" ColumnName="SHOP_ID" />
                 <ScalarProperty Name="PRICE" ColumnName="PRICE" />
                 <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
-                <ScalarProperty Name="IS_EXISTS" ColumnName="IS_EXISTS" />
                 <ScalarProperty Name="COUNT" ColumnName="COUNT" />
-                <ScalarProperty Name="CATEGORY" ColumnName="CATEGORY" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

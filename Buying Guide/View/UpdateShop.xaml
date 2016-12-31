@@ -12,16 +12,16 @@
                 <StackPanel HorizontalAlignment="Left" Width="785">
                     <Grid Height="45">
                         <Label x:Name="Label" Content="Название торговой точки:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155"/>
-                        <TextBox x:Name="ShopName" HorizontalAlignment="Left" Height="26" Margin="170,10,5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" VerticalContentAlignment="Center"/>
+                        <TextBox x:Name="ShopName" HorizontalAlignment="Left" Height="26" Margin="170,10,5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" VerticalContentAlignment="Center" Text="{Binding Shop}"/>
                     </Grid>
                     <Grid Height="45">
                         <Label x:Name="label1" Content="Адрес:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155"/>
-                        <TextBox x:Name="Address" HorizontalAlignment="Left" Height="26" Margin="170,10,5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" VerticalContentAlignment="Center"/>
+                        <TextBox x:Name="Address" HorizontalAlignment="Left" Height="26" Margin="170,10,5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" VerticalContentAlignment="Center" Text="{Binding Address}"/>
                     </Grid>
                     <Grid Height="45">
                         <Label x:Name="label2" Content="Добавить изображение:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155"/>
-                        <TextBox x:Name="ImageFile" HorizontalAlignment="Left" Height="26" Margin="170,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="528" VerticalContentAlignment="Center" TextChanged="ImageFile_TextChanged"/>
-                        <Button x:Name="Choose" Content="Обзор" HorizontalAlignment="Left" Margin="698,10,0,0" VerticalAlignment="Top" Width="72" Height="26"/>
+                        <TextBox x:Name="ImageFile" HorizontalAlignment="Left" Height="26" Margin="170,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="528" VerticalContentAlignment="Center" TextChanged="ImageFile_TextChanged" Text="{Binding Image}"/>
+                        <Button x:Name="Choose" Content="Обзор" HorizontalAlignment="Left" Margin="698,10,0,0" Width="72" Height="26" VerticalAlignment="Top" Click="Choose_OnClick"/>
                     </Grid>
                     <Grid Height="45">
                         <Label x:Name="l" Content="Телефон:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="155"/>
@@ -39,7 +39,7 @@
                             <Label x:Name="ThursdayL" Content="Четверг" HorizontalAlignment="Left" Margin="470,0,0,0" VerticalAlignment="Top" Height="30" Width="85" HorizontalContentAlignment="Center"/>
                             <Label x:Name="FridayL" Content="Пятница" HorizontalAlignment="Left" Margin="560,0,0,0" VerticalAlignment="Top" Height="30" Width="85" HorizontalContentAlignment="Center"/>
                             <Label x:Name="SaturdayL" Content="Суббота" HorizontalAlignment="Left" Margin="650,0,0,0" VerticalAlignment="Top" Height="30" Width="85" HorizontalContentAlignment="Center"/>
-                            
+
                         </Grid>
                     </Border>
 

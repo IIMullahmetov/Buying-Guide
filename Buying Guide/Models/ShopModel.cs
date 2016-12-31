@@ -108,7 +108,7 @@ namespace Buying_Guide.Models
             return _specializations;
         }
 
-        public List<string> GetPhone()
+        public List<string> GetPhones()
         {
             return _phones;
         }

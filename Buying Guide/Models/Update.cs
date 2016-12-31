@@ -17,6 +17,11 @@ namespace Buying_Guide.Models
         private readonly List<int> _weekDaysId = new List<int>();
 
         //с 20 по 134 строки мы получаем соответсвующие данные о  нашем магазине с соответсвующей Айди 
+
+        public SHOP GetShop()
+        {
+            return _orm.SHOP.FirstOrDefault(s => s.ID == _id);
+        }
         public Update(int id)
         {
             _id = id;
@@ -193,10 +198,7 @@ namespace Buying_Guide.Models
             }
             return true;
         }
-
         
-        
-
         public bool Remove()
         {
             try

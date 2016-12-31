@@ -17,7 +17,9 @@
         <Border BorderBrush="LightGray" BorderThickness="1" HorizontalAlignment="Left" Height="510" Margin="5,50,0,0" VerticalAlignment="Top" Width="770" CornerRadius="2">
             <ScrollViewer HorizontalAlignment="Left" Height="495"  VerticalAlignment="Top" Width="770" Name="ScrollViewer" Margin="-11,9,0,-11">
                 <InlineUIContainer>
-                    <StackPanel Height="auto" Width="748" Name="StackPanel"/>
+                    <StackPanel Height="auto" Width="748" Name="StackPanel">
+                        
+                    </StackPanel>
                 </InlineUIContainer>
             </ScrollViewer>
         </Border>
